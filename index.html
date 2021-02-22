@@ -2,10 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-      name="viewport"
-    />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 
     <title>🐍 virtualenv rewrite 🐍</title>
 
@@ -13,11 +10,7 @@
     <link href="dist/reveal.css" rel="stylesheet" />
     <link href="dist/theme/solarized.css" id="theme" rel="stylesheet" />
 
-    <link
-      href="plugin/highlight/monokai.css"
-      id="highlight-theme"
-      rel="stylesheet"
-    />
+    <link href="plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" />
   </head>
   <style>
     .reveal pre {
@@ -37,495 +30,620 @@
     @font-face {
       font-family: "Inconsolata Patched";
       src: local("Inconsolata Patched"),
-        url("dist/theme/fonts/Inconsolata Regular Nerd Font Complete Mono.otf")
-          format("opentype");
+        url("dist/theme/fonts/Inconsolata Regular Nerd Font Complete Mono.otf") format("opentype");
     }
   </style>
   <body>
     <div class="reveal">
-    <div class="slides">
-
+      <div class="slides">
         <section>
-            <h1>Type hints</h1>
-            <h5>inside the snake pit</h5>
-            <p>
-                <small>by <a href="https://github.com/gaborbernat">Bernat Gabor</a> /
-                    <a src="https://twitter.com/gjbernat">@gjbernat</a> /
-                    <a href="https://github.com/bloomberg">Bloomberg</a>
-                </small>
-                <br>
-                <a href="https://gaborbernat.github.io/type-hint-recr-2021/">https://gaborbernat.github.io/type-hint-recr-2021</a>
-            </p>
+          <h1>Type hints</h1>
+          <h5>inside the snake pit</h5>
+          <p>
+            <small
+              >by <a href="https://github.com/gaborbernat">Bernat Gabor</a> /
+              <a src="https://twitter.com/gjbernat">@gjbernat</a> /
+              <a href="https://github.com/bloomberg">Bloomberg</a>
+            </small>
+            <br />
+            <a href="https://gaborbernat.github.io/type-hint-recr-2021/"
+              >https://gaborbernat.github.io/type-hint-recr-2021</a
+            >
+          </p>
         </section>
 
         <section>
-            <h3>Who am I?</h3>
-            <div>
-                <ul>
-                    <li class="fragment">software engineer at Bloomberg (data ingestion and quality control)</li>
-                    <li class="fragment">OSS contributor <a href="https://github.com/gaborbernat">github/gaborbernat</a></li>
-                    <li class="fragment">member of the Python Packaging Authority</li>
-                    <li class="fragment">😎 parent to two Yorkshire Terriers
-                        </li>
-                </ul>
-                <img class="fragment" src="./img/silky_junior.png" style="width: 60%; margin-left: auto; margin-right: auto"/>
-            </div>
-        </section>
-
-        <section>
-            <h3>Maintainer (some author) of Python OSS projects</h3>
-            <style>
-                #maintain.reveal table td {
-                    padding: 0;
-                }
-                #maintain > tbody > tr > td > a > img {
-                    margin: 0;
-                    height: 1em;
-                }
-                #maintain.reveal table td {
-                    max-height: 8%;
-                }
-            </style>
-            <table id="maintain">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Release</th>
-                    <th>Activity</th>
-                    <th>Popularity</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="https://github.com/pypa/virtualenv">virtualenv</a></td>
-                    <td><a href="https://pypi.org/project/virtualenv" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/2478f5733f49237a290a9f669f69d10e08ceec94645d38a771244f89adb8ea21/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7669727475616c656e763f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/virtualenv?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/41dd7f5821a53ac0bbf390197b5f33406e66140b4faf783d2026631a035f3b65/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f7669727475616c656e763f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/41dd7f5821a53ac0bbf390197b5f33406e66140b4faf783d2026631a035f3b65/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f7669727475616c656e763f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/pypa/virtualenv?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/virtualenv" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/e916588bc509728cfa3956a8b979768f57ae7f6964f8720ab0521749570e1cd3/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7669727475616c656e763f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/virtualenv?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/tox-dev/tox">tox</a></td>
-                    <td><a href="https://pypi.org/project/tox" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/a96912e3b79d01f1a8f69973682cf53fcdb5a20f2a0ef7d60ac732ce4b836006/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f783f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/tox?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/980b2ffb011806fab88851827c993a772bf1703426919c6ac00837c7c0edbf82/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/980b2ffb011806fab88851827c993a772bf1703426919c6ac00837c7c0edbf82/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/tox" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/661cca7bcd00df30f68b0ec6519232fe6abd08eed8b7cbe187463697bcb26f9e/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f783f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/tox?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/pypa/build">build</a></td>
-                    <td><a href="https://pypi.org/project/build" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/d3b0e186d9adb2f1d8fc7b9a78d183dac2b3f53de2a4947e8eb1fdbf4d267eaa/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f6275696c643f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/build?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/9a140d769b737becc941827259908a01be300a07b00a84dee0f4de03e754faec/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f6275696c643f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/9a140d769b737becc941827259908a01be300a07b00a84dee0f4de03e754faec/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f6275696c643f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/pypa/build?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/build" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/ff38084c7c389512c5b81fb60f756b6da955aa2965909a74f81d209864f2cc3b/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f6275696c643f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/build?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/pipxproject/pipx">pipx</a></td>
-                    <td><a href="https://pypi.org/project/pipx" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/594b71470e22ea58aea4cb133906d670b4c754a306d903efd22349778a4c2a0d/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f706970783f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/pipx?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/b24436977e71a9b64f009da9ce48329d0b81828485f936cd1ab10d102bb76a57/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7069707870726f6a6563742f706970783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/b24436977e71a9b64f009da9ce48329d0b81828485f936cd1ab10d102bb76a57/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7069707870726f6a6563742f706970783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/pipxproject/pipx?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/pipx" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/16325770788d4cf93ef35df87e52d62d7914497962e9d44a8740167d2997faec/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f706970783f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/pipx?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/pytest-dev/pytest-print">pytest-print</a></td>
-                    <td><a href="https://pypi.org/project/pytest-print" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/e420b4215d3128701551e377f71bac038a8a7853fb57b0fd7afacf6fbc9d6cd8/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7079746573742d7072696e743f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/pytest-print?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/0e9f7c6caf0a06d45deedd38c4625da61fe8d01fe97c7a77bd694bb7821e9f89/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7079746573742d6465762f7079746573742d7072696e743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/0e9f7c6caf0a06d45deedd38c4625da61fe8d01fe97c7a77bd694bb7821e9f89/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7079746573742d6465762f7079746573742d7072696e743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/pytest-dev/pytest-print?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/pytest-print" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/62a7dad741f6f35764c32d806eac852489affc68e077887a8bf23f334de965d8/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7079746573742d7072696e743f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/pytest-print?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/tox-dev/tox-conda">tox-conda</a></td>
-                    <td><a href="https://pypi.org/project/tox-conda" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/02608a9cddaf4cc45e863a0ff8c531f962bbb1b7d3734598cb98e0d94d24240d/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f782d636f6e64613f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/tox-conda?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/8fe7efa7fa0c97562fab4d407f3407fc29ee40301e7789d8865cf617df2e57c3/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d636f6e64613f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/8fe7efa7fa0c97562fab4d407f3407fc29ee40301e7789d8865cf617df2e57c3/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d636f6e64613f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox-conda?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/tox-conda" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/6c3c60e05cc0dd6eddc2f1e393cb1863afa2bede3768cbfb08ae4f99e8b00cfa/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f782d636f6e64613f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/tox-conda?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/tox-dev/tox-ini-fmt">tox-ini-fmt</a></td>
-                    <td><a href="https://pypi.org/project/tox-ini-fmt" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/623d00f054437c499f094172021d6405433c1f288cf84b84495376f985462e37/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f782d696e692d666d743f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/tox-ini-fmt?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/5818dfa2f74005ff1c78b32d2a3b70c0f40e5e5b0cbfe134b3b8d25b0d7102fe/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d696e692d666d743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/5818dfa2f74005ff1c78b32d2a3b70c0f40e5e5b0cbfe134b3b8d25b0d7102fe/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d696e692d666d743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox-ini-fmt?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/tox-ini-fmt" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/1549c23069e351f565ea13a12abf2275b1f1bbca3fd6ca8a4fd8efb2564c17ab/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f782d696e692d666d743f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/tox-ini-fmt?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/bloomberg/attrs-strict">attrs-strict</a></td>
-                    <td><a href="https://pypi.org/project/attrs-strict" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/73d5901ae794ef78746697345a388b0500283c8e9f9f22c34ae5d6e7cda8f0ba/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f61747472732d7374726963743f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/attrs-strict?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/f170b41035a0d7895a58a46a1bcb5e618db63d4c46eda55bb5cf5b3a1f5cb356/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f626c6f6f6d626572672f61747472732d7374726963743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/f170b41035a0d7895a58a46a1bcb5e618db63d4c46eda55bb5cf5b3a1f5cb356/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f626c6f6f6d626572672f61747472732d7374726963743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/bloomberg/attrs-strict?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/attrs-strict" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/68d19a362b7b42686e9d5c7407eeba9f8a61fe254dbdd1b77dcac5553e341c32/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f61747472732d7374726963743f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/attrs-strict?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/ambv/retype">retype</a></td>
-                    <td><a href="https://pypi.org/project/retype" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/b9d4e903b32fa298cfab1de56ec2836506525a6366102c9dec1817ec93a529f9/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7265747970653f7374796c653d666c61742d737175617265"
-                            alt="PyPI" data-canonical-src="https://img.shields.io/pypi/v/retype?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/8f61ca329ca5e1617d8d7fbd28ac75b735726849184a19639a6d6fabb8405ed2/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f616d62762f7265747970653f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/8f61ca329ca5e1617d8d7fbd28ac75b735726849184a19639a6d6fabb8405ed2/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f616d62762f7265747970653f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/ambv/retype?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/retype" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/f74ba9fdce84645e163bea76dca9a6d330091260dbc93f7dea872acc340c049b/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7265747970653f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/retype?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://github.com/gaborbernat/sphinx-argparse-cli">sphinx-argparse-cli</a></td>
-                    <td><a href="https://pypi.org/project/sphinx-argparse-cli" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/d793ce81ab781fd809eabb6ecb8c8d73249e82841f0d29b947930dbac3101772/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f737068696e782d61726770617273652d636c693f7374796c653d666c61742d737175617265"
-                            alt="PyPI"
-                            data-canonical-src="https://img.shields.io/pypi/v/sphinx-argparse-cli?style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a target="_blank" rel="noopener noreferrer"
-                           href="https://camo.githubusercontent.com/b91bf489e1aefe23ce8ed47da5e61bc2dc94814222a07960ee5d35d6dc7d68cc/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f6761626f726265726e61742f737068696e782d61726770617273652d636c693f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"><img
-                            src="https://camo.githubusercontent.com/b91bf489e1aefe23ce8ed47da5e61bc2dc94814222a07960ee5d35d6dc7d68cc/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f6761626f726265726e61742f737068696e782d61726770617273652d636c693f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
-                            alt="GitHub last commit"
-                            data-canonical-src="https://img.shields.io/github/last-commit/gaborbernat/sphinx-argparse-cli?logo=python&amp;style=flat-square"
-                            style="max-width:100%;"></a></td>
-                    <td><a href="https://pypistats.org/packages/sphinx-argparse-cli" rel="nofollow"><img
-                            src="https://camo.githubusercontent.com/a952f13e6c8692120f6d782167c76fbb8e980ab95068c3767ed039949472f9f9/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f737068696e782d61726770617273652d636c693f7374796c653d666c61742d737175617265"
-                            alt="PyPI - Downloads"
-                            data-canonical-src="https://img.shields.io/pypi/dm/sphinx-argparse-cli?style=flat-square"
-                            style="max-width:100%;"> </a></td>
-                </tr>
-                </tbody>
-            </table>
-
-        </section>
-
-        <section>
-            <h1>In Python?</h1>
-            <img style="margin-bottom: 0; border-bottom: 0;"
-                 src="./img/interested.jpg"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://commons.wikimedia.org/wiki/File:New_Zealand_Fur_seal.FZ200_(14502532505).jpg">&copy;
-                Creative Commons CC0 1.0</a></p>
-        </section>
-
-        <section>
-            <h2>Type hinting</h2>
+          <h3>Who am I?</h3>
+          <div>
             <ul>
-                <li>foundations laid down in <a
-                        href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a>
-                </li>
-                <li class="fragment">implemented by (+ reference checker - mypy)
-                    <ul>
-                        <li>Guido van Rossum - BDFL</li>
-                        <li>Jukka Lehtosalo - mypy</li>
-                        <li>Ivan Levkivskyi</li>
-                        <li>Łukasz Langa</li>
-                    </ul>
-                </li>
-                <div class="fragment">
-                    <li>added to Python standard library with version 3.5 (improved ever since)</li>
-                    <pre style="height: 70px; font-size: 1em;">
+              <li class="fragment">software engineer at Bloomberg (data ingestion and quality control)</li>
+              <li class="fragment">OSS contributor <a href="https://github.com/gaborbernat">github/gaborbernat</a></li>
+              <li class="fragment">member of the Python Packaging Authority</li>
+              <li class="fragment">😎 parent to two Yorkshire Terriers</li>
+            </ul>
+            <img
+              class="fragment"
+              src="./img/silky_junior.png"
+              style="width: 60%; margin-left: auto; margin-right: auto"
+            />
+          </div>
+        </section>
+
+        <section>
+          <h3>Maintainer (some author) of Python OSS projects</h3>
+          <style>
+            #maintain.reveal table td {
+              padding: 0;
+            }
+            #maintain > tbody > tr > td > a > img {
+              margin: 0;
+              height: 1em;
+            }
+            #maintain.reveal table td {
+              max-height: 8%;
+            }
+          </style>
+          <table id="maintain">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Release</th>
+                <th>Activity</th>
+                <th>Popularity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://github.com/pypa/virtualenv">virtualenv</a></td>
+                <td>
+                  <a href="https://pypi.org/project/virtualenv" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/2478f5733f49237a290a9f669f69d10e08ceec94645d38a771244f89adb8ea21/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7669727475616c656e763f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/virtualenv?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/41dd7f5821a53ac0bbf390197b5f33406e66140b4faf783d2026631a035f3b65/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f7669727475616c656e763f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/41dd7f5821a53ac0bbf390197b5f33406e66140b4faf783d2026631a035f3b65/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f7669727475616c656e763f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/pypa/virtualenv?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/virtualenv" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/e916588bc509728cfa3956a8b979768f57ae7f6964f8720ab0521749570e1cd3/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7669727475616c656e763f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/virtualenv?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/tox-dev/tox">tox</a></td>
+                <td>
+                  <a href="https://pypi.org/project/tox" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/a96912e3b79d01f1a8f69973682cf53fcdb5a20f2a0ef7d60ac732ce4b836006/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f783f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/tox?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/980b2ffb011806fab88851827c993a772bf1703426919c6ac00837c7c0edbf82/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/980b2ffb011806fab88851827c993a772bf1703426919c6ac00837c7c0edbf82/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/tox" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/661cca7bcd00df30f68b0ec6519232fe6abd08eed8b7cbe187463697bcb26f9e/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f783f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/tox?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/pypa/build">build</a></td>
+                <td>
+                  <a href="https://pypi.org/project/build" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/d3b0e186d9adb2f1d8fc7b9a78d183dac2b3f53de2a4947e8eb1fdbf4d267eaa/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f6275696c643f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/build?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/9a140d769b737becc941827259908a01be300a07b00a84dee0f4de03e754faec/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f6275696c643f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/9a140d769b737becc941827259908a01be300a07b00a84dee0f4de03e754faec/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f707970612f6275696c643f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/pypa/build?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/build" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/ff38084c7c389512c5b81fb60f756b6da955aa2965909a74f81d209864f2cc3b/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f6275696c643f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/build?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/pipxproject/pipx">pipx</a></td>
+                <td>
+                  <a href="https://pypi.org/project/pipx" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/594b71470e22ea58aea4cb133906d670b4c754a306d903efd22349778a4c2a0d/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f706970783f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/pipx?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/b24436977e71a9b64f009da9ce48329d0b81828485f936cd1ab10d102bb76a57/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7069707870726f6a6563742f706970783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/b24436977e71a9b64f009da9ce48329d0b81828485f936cd1ab10d102bb76a57/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7069707870726f6a6563742f706970783f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/pipxproject/pipx?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/pipx" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/16325770788d4cf93ef35df87e52d62d7914497962e9d44a8740167d2997faec/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f706970783f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/pipx?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/pytest-dev/pytest-print">pytest-print</a></td>
+                <td>
+                  <a href="https://pypi.org/project/pytest-print" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/e420b4215d3128701551e377f71bac038a8a7853fb57b0fd7afacf6fbc9d6cd8/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7079746573742d7072696e743f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/pytest-print?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/0e9f7c6caf0a06d45deedd38c4625da61fe8d01fe97c7a77bd694bb7821e9f89/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7079746573742d6465762f7079746573742d7072696e743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/0e9f7c6caf0a06d45deedd38c4625da61fe8d01fe97c7a77bd694bb7821e9f89/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f7079746573742d6465762f7079746573742d7072696e743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/pytest-dev/pytest-print?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/pytest-print" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/62a7dad741f6f35764c32d806eac852489affc68e077887a8bf23f334de965d8/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7079746573742d7072696e743f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/pytest-print?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/tox-dev/tox-conda">tox-conda</a></td>
+                <td>
+                  <a href="https://pypi.org/project/tox-conda" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/02608a9cddaf4cc45e863a0ff8c531f962bbb1b7d3734598cb98e0d94d24240d/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f782d636f6e64613f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/tox-conda?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/8fe7efa7fa0c97562fab4d407f3407fc29ee40301e7789d8865cf617df2e57c3/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d636f6e64613f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/8fe7efa7fa0c97562fab4d407f3407fc29ee40301e7789d8865cf617df2e57c3/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d636f6e64613f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox-conda?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/tox-conda" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/6c3c60e05cc0dd6eddc2f1e393cb1863afa2bede3768cbfb08ae4f99e8b00cfa/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f782d636f6e64613f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/tox-conda?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/tox-dev/tox-ini-fmt">tox-ini-fmt</a></td>
+                <td>
+                  <a href="https://pypi.org/project/tox-ini-fmt" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/623d00f054437c499f094172021d6405433c1f288cf84b84495376f985462e37/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f746f782d696e692d666d743f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/tox-ini-fmt?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/5818dfa2f74005ff1c78b32d2a3b70c0f40e5e5b0cbfe134b3b8d25b0d7102fe/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d696e692d666d743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/5818dfa2f74005ff1c78b32d2a3b70c0f40e5e5b0cbfe134b3b8d25b0d7102fe/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f746f782d6465762f746f782d696e692d666d743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/tox-dev/tox-ini-fmt?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/tox-ini-fmt" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/1549c23069e351f565ea13a12abf2275b1f1bbca3fd6ca8a4fd8efb2564c17ab/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f746f782d696e692d666d743f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/tox-ini-fmt?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/bloomberg/attrs-strict">attrs-strict</a></td>
+                <td>
+                  <a href="https://pypi.org/project/attrs-strict" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/73d5901ae794ef78746697345a388b0500283c8e9f9f22c34ae5d6e7cda8f0ba/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f61747472732d7374726963743f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/attrs-strict?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/f170b41035a0d7895a58a46a1bcb5e618db63d4c46eda55bb5cf5b3a1f5cb356/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f626c6f6f6d626572672f61747472732d7374726963743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/f170b41035a0d7895a58a46a1bcb5e618db63d4c46eda55bb5cf5b3a1f5cb356/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f626c6f6f6d626572672f61747472732d7374726963743f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/bloomberg/attrs-strict?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/attrs-strict" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/68d19a362b7b42686e9d5c7407eeba9f8a61fe254dbdd1b77dcac5553e341c32/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f61747472732d7374726963743f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/attrs-strict?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/ambv/retype">retype</a></td>
+                <td>
+                  <a href="https://pypi.org/project/retype" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/b9d4e903b32fa298cfab1de56ec2836506525a6366102c9dec1817ec93a529f9/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f7265747970653f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/retype?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/8f61ca329ca5e1617d8d7fbd28ac75b735726849184a19639a6d6fabb8405ed2/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f616d62762f7265747970653f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/8f61ca329ca5e1617d8d7fbd28ac75b735726849184a19639a6d6fabb8405ed2/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f616d62762f7265747970653f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/ambv/retype?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/retype" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/f74ba9fdce84645e163bea76dca9a6d330091260dbc93f7dea872acc340c049b/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f7265747970653f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/retype?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/gaborbernat/sphinx-argparse-cli">sphinx-argparse-cli</a></td>
+                <td>
+                  <a href="https://pypi.org/project/sphinx-argparse-cli" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/d793ce81ab781fd809eabb6ecb8c8d73249e82841f0d29b947930dbac3101772/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f737068696e782d61726770617273652d636c693f7374796c653d666c61742d737175617265"
+                      alt="PyPI"
+                      data-canonical-src="https://img.shields.io/pypi/v/sphinx-argparse-cli?style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://camo.githubusercontent.com/b91bf489e1aefe23ce8ed47da5e61bc2dc94814222a07960ee5d35d6dc7d68cc/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f6761626f726265726e61742f737068696e782d61726770617273652d636c693f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                    ><img
+                      src="https://camo.githubusercontent.com/b91bf489e1aefe23ce8ed47da5e61bc2dc94814222a07960ee5d35d6dc7d68cc/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6173742d636f6d6d69742f6761626f726265726e61742f737068696e782d61726770617273652d636c693f6c6f676f3d707974686f6e267374796c653d666c61742d737175617265"
+                      alt="GitHub last commit"
+                      data-canonical-src="https://img.shields.io/github/last-commit/gaborbernat/sphinx-argparse-cli?logo=python&amp;style=flat-square"
+                      style="max-width: 100%"
+                  /></a>
+                </td>
+                <td>
+                  <a href="https://pypistats.org/packages/sphinx-argparse-cli" rel="nofollow"
+                    ><img
+                      src="https://camo.githubusercontent.com/a952f13e6c8692120f6d782167c76fbb8e980ab95068c3767ed039949472f9f9/68747470733a2f2f696d672e736869656c64732e696f2f707970692f646d2f737068696e782d61726770617273652d636c693f7374796c653d666c61742d737175617265"
+                      alt="PyPI - Downloads"
+                      data-canonical-src="https://img.shields.io/pypi/dm/sphinx-argparse-cli?style=flat-square"
+                      style="max-width: 100%"
+                    />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h1>In Python?</h1>
+          <img style="margin-bottom: 0; border-bottom: 0; width: 70%" src="./img/interested.jpg" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://commons.wikimedia.org/wiki/File:New_Zealand_Fur_seal.FZ200_(14502532505).jpg"
+              >&copy; Creative Commons CC0 1.0</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h2>Type hinting</h2>
+          <ul>
+            <li>foundations laid down in <a href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a></li>
+            <li class="fragment">
+              implemented by (+ reference checker - mypy)
+              <ul>
+                <li>Guido van Rossum - BDFL</li>
+                <li>Jukka Lehtosalo - mypy</li>
+                <li>Ivan Levkivskyi</li>
+                <li>Łukasz Langa</li>
+              </ul>
+            </li>
+            <div class="fragment">
+              <li>added to Python standard library with version 3.5 (improved ever since)</li>
+              <pre style="height: 70px; font-size: 1em">
                     <code class="lang-python" data-trim data-noescape>
                     from typing import Any
                     </code>
                 </pre>
-                </div>
-            </ul>
+            </div>
+          </ul>
         </section>
 
         <section>
-            <h2>Type hinting</h2>
-            <ul>
-                <li>still on Python 2?</li>
-                <ol>
-                    <div class="fragment">
-                        <li style="color: red">end of life at 2020 January 1
-                            <div class="fragment" style="font-size: 12px">
-                                <img style="margin-bottom: 0; border-bottom: 0"
-                                     src="img/doom.jpg"/>
-                                <div class="ccmessage"> &nbsp; © Copyright
-                                    <a title="View profile"
-                                       href="https://www.geograph.org.uk/profile/14700"
-                                       property="cc:attributionName"
-                                       rel="cc:attributionURL dct:creator">Chris
-                                        Downer</a> and
-                                    licensed for <a
-                                            href="http://www.geograph.org.uk/reuse.php?id=918881">reuse</a>
-                                    under this <a
-                                            rel="license"
-                                            href="http://creativecommons.org/licenses/by-sa/2.0/"
-                                            class="nowrap"
-                                            about="http://s0.geograph.org.uk/photos/91/88/918881_587d2859.jpg"
-                                            title="Creative Commons Attribution-Share Alike 2.0 Licence">Creative
-                                        Commons
-                                        Licence</a>.
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="fragment">it's available (backported) via <a
-                                href="https://pypi.org/project/typing/">PyPi
-                            package</a> down to 2.7 😃
-                        </li>
-                    </div>
-                </ol>
-            </ul>
+          <h1>why do it?</h1>
+          <img style="margin-bottom: 0; border-bottom: 0; width: 70%" src="./img/pinguin.jpg" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.pexels.com/photo/cold-nature-cute-ice-52509/">&copy; Creative Commons CC0 1.0</a>
+          </p>
         </section>
 
         <section>
-            <h1>why do it?</h1>
-            <img style="margin-bottom: 0; border-bottom: 0;" src="./img/pinguin.jpg"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.pexels.com/photo/cold-nature-cute-ice-52509/">&copy;
-                Creative Commons CC0 1.0</a></p>
-        </section>
-
-        <section>
-            <h2>easier to</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>understand (and use) the source code</li>
-                <li class="fragment">maintain</li>
-                <li class="fragment">debug</li>
-            </ul>
-            <pre style="font-size: 0.75em" class="fragment">
+          <h2>easier to</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>understand (and use) the source code</li>
+            <li class="fragment">maintain</li>
+            <li class="fragment">debug</li>
+          </ul>
+          <pre style="font-size: 0.75em" class="fragment">
                 <code class="lang-python" data-trim data-noescape>
                  def send_request(request_data : Any,
                                   headers: Optional[Dict[str, str]],
                                   user_id: Optional[UserId] = None,
                                   as_json: bool = True):
-                     pass
+                      """ this is a great sender """
                 </code>
             </pre>
         </section>
 
         <section>
-            <h2>easier to</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>understand (and use) the source code</li>
-                <li>maintain</li>
-                <li>debug</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>easier to</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>understand (and use) the source code</li>
+            <li>maintain</li>
+            <li>debug</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def send_request(<mark>request_data</mark> : <mark>Any</mark>,
                                  headers: Optional[Dict[str, str]],
                                  user_id: Optional[UserId] = None,
                                  as_json: bool = True):
-                    pass
+                     """ this is a great sender """
                 </code>
             </pre>
         </section>
 
         <section>
-            <h2>easier to</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>understand (and use) the source code</li>
-                <li>maintain</li>
-                <li>debug</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>easier to</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>understand (and use) the source code</li>
+            <li>maintain</li>
+            <li>debug</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def send_request(request_data : Any,
                                  <mark>headers</mark>: <mark>Optional[Dict[str, str]]</mark>,
                                  user_id: Optional[UserId] = None,
                                  as_json: bool = True):
-                    pass
+                     """ this is a great sender """
                 </code>
             </pre>
         </section>
 
-
         <section>
-            <h2>easier to</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>understand (and use) the source code</li>
-                <li>maintain</li>
-                <li>debug</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>easier to</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>understand (and use) the source code</li>
+            <li>maintain</li>
+            <li>debug</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def send_request(request_data : Any,
                                  headers: Optional[Dict[str, str]],
                                  <mark>user_id</mark>: <mark>Optional[UserId]</mark> = None,
                                  as_json: bool = True):
-                    pass
+                     """ this is a great sender """
                 </code>
             </pre>
         </section>
 
         <section>
-            <h2>easier to</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>understand (and use) the source code</li>
-                <li>maintain</li>
-                <li>debug</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>easier to</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>understand (and use) the source code</li>
+            <li>maintain</li>
+            <li>debug</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def send_request(request_data : Any,
                                  headers: Optional[Dict[str, str]],
                                  user_id: Optional[UserId] = None,
                                  <mark>as_json</mark>: <mark>bool</mark> = True):
-                    pass
+                     """ this is a great sender """
                 </code>
             </pre>
         </section>
 
         <section>
-            <h2>Easier refactoring</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>find usages of types</li>
-                <li class="fragment">discover call hierarchy</li>
-                <li class="fragment">better detection of objects and lifecycle flow</li>
-            </ul>
+          <h2>Easier refactoring</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>find usages of types</li>
+            <li class="fragment">discover call hierarchy</li>
+            <li class="fragment">better detection of objects and lifecycle flow</li>
+          </ul>
         </section>
 
         <section>
-            <h2>help editors suggestion engine</h2>
-            <img src="img/editor_suggest.png"/>
+          <h2>help editors suggestion engine</h2>
+          <img src="img/editor_suggest.png" />
         </section>
 
         <section>
-            <h2>lint checks - find bugs with no tests</h2>
-            <ul>
-                <li>IDE - PyCharm/VsCode<br/>
-                    <img src="img/type_missmatch.jpg"/>
-                </li>
-                <li class="fragment"><a href="http://mypy-lang.org/">mypy - reference implementation type checker</a>
-                </li>
-                <li class="fragment"><a href="https://pyre-check.org/">pyre</a> - Facebook</li>
-                <li class="fragment"><a href="https://github.com/google/pytype">pytype</a> - Google</li>
-                <li class="fragment"><a href="https://github.com/Microsoft/pyright">pyright</a> - Microsoft</li>
-            </ul>
-
+          <h2>lint checks - find bugs with no tests</h2>
+          <ul>
+            <li>
+              IDE - PyCharm/VsCode<br />
+              <img src="img/type_missmatch.jpg" />
+            </li>
+            <li class="fragment"><a href="http://mypy-lang.org/">mypy - reference implementation type checker</a></li>
+            <li class="fragment"><a href="https://pyre-check.org/">pyre</a> - Facebook</li>
+            <li class="fragment"><a href="https://github.com/google/pytype">pytype</a> - Google</li>
+            <li class="fragment"><a href="https://github.com/Microsoft/pyright">pyright</a> - Microsoft</li>
+          </ul>
         </section>
 
         <section>
-            <h2>improve documentation</h2>
-            <img src="img/documentation.png"/>
+          <h2>improve documentation</h2>
+          <img src="img/documentation.png" />
         </section>
 
         <style>
-            ul.plus {
-                display: block;
-                margin: 20px auto;
-                width: 90%;
-                color: darkgreen;
-                font-size: 0.8em;
-                list-style: none;
-            }
+          mark {
+            background-color: lightcoral;
+          }
 
-            ul.plus li:before {
-                content: '\2714';
-                margin: 0 1em; /* any design */
-            }
+          ul.plus {
+            display: block;
+            margin: 20px auto;
+            width: 90%;
+            color: darkgreen;
+            font-size: 0.8em;
+            list-style: none;
+          }
 
-            ul.cross {
-                display: block;
-                margin: 20px auto;
-                width: 90%;
-                color: darkred;
-                font-size: 0.8em;
-                list-style: none;
-            }
+          ul.plus li:before {
+            content: "\2714";
+            margin: 0 1em; /* any design */
+          }
 
-            ul.cross li:before {
-                content: '\2718';
-                margin: 0 1em; /* any design */
-            }
+          ul.cross {
+            display: block;
+            margin: 20px auto;
+            width: 90%;
+            color: darkred;
+            font-size: 0.8em;
+            list-style: none;
+          }
+
+          ul.cross li:before {
+            content: "\2718";
+            margin: 0 1em; /* any design */
+          }
         </style>
 
         <section>
-            <h2>data validation - pydantic</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>a cleaner syntax to specify type requirements</li>
-                <pre style="font-size: 0.75em">
+          <h2>data validation - pydantic</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     from datetime import datetime
                     from typing import List
+
                     from pydantic import BaseModel, ValidationError
 
                     class User(BaseModel):
@@ -543,13 +661,13 @@
 
                     </code>
                 </pre>
-            </ul>
+          </ul>
         </section>
 
         <section>
-            <h2>detect vulnerable code - security</h2>
-            <p>Facebook - pyre</p>
-            <pre style="font-size: 0.75em">
+          <h2>detect vulnerable code - security</h2>
+          <p>Facebook - pyre</p>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     def magic_call(unsafe: UserProvidedStr, safe: str):
                         subprocess.check_call([unsafe])
@@ -559,9 +677,9 @@
         </section>
 
         <section>
-            <h2>detect vulnerable code - security</h2>
-            <p>Facebook - pyre</p>
-            <pre style="font-size: 0.75em">
+          <h2>detect vulnerable code - security</h2>
+          <p>Facebook - pyre</p>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     def magic_call(<mark>unsafe</mark>: UserProvidedStr, safe: str):
                         <mark>subprocess.check_call([unsafe])</mark> # error out
@@ -571,9 +689,9 @@
         </section>
 
         <section>
-            <h2>detect vulnerable code - security</h2>
-            <p>Facebook - pyre</p>
-            <pre style="font-size: 0.75em">
+          <h2>detect vulnerable code - security</h2>
+          <p>Facebook - pyre</p>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     def magic_call(unsafe: UserProvidedStr, <mark>safe: str</mark>):
                         subprocess.check_call([unsafe])
@@ -582,15 +700,15 @@
                 </pre>
         </section>
 
-
         <section>
-            <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>a cleaner syntax to specify type requirements</li>
-                <pre style="font-size: 0.75em">
+          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     from datetime import datetime
                     from typing import List
+
                     from pydantic import BaseModel, ValidationError
 
                     class User(BaseModel):
@@ -608,18 +726,18 @@
 
                     </code>
                 </pre>
-            </ul>
-
+          </ul>
         </section>
 
         <section>
-            <h2>data validation - pydantic</h2>
-            <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-                <li>a cleaner syntax to specify type requirements</li>
-                <pre style="font-size: 0.75em">
+          <h2>data validation - pydantic</h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
                     from datetime import datetime
                     from typing import List
+
                     from pydantic import BaseModel, ValidationError
 
                     class User(BaseModel):
@@ -637,109 +755,108 @@
 
                     </code>
                 </pre>
-            </ul>
-
-        </section>
-
-
-        <section>
-            <h2>what it is not</h2>
-            <p style="color: red">essentially treated as comment during script evaluation</p>
-            <ul class="cross" style="display: block; margin: 20px auto; width: 90%">
-                <li class="fragment">no runtime type inference</li>
-                <li class="fragment">no performance improvement</li>
-            </ul>
+          </ul>
         </section>
 
         <section>
-            <h2>what it is not</h2>
-            <p style="color: red">essentially treated as comment during script evaluation</p>
-            <ul class="cross" style="display: block; margin: 20px auto; width: 90%">
-                <li>no runtime type inference</li>
-                <li><s>no performance improvement</s>
-
-                </li>
-            </ul>
-        </section>
-        <section>
-            <h2><a href="https://github.com/mypyc/mypyc">mypyc</a> - speed up for free (mostly)</h2>
-            <ul>
-                <li class="fragment">compile a C extension type hinted code (not full syntax support yet)</li>
-                <li class="fragment">4 to 20 X performance improvement (due to avoid hashtable lookups)</li>
-                <li class="fragment"><a href="http://mypy-lang.org">mypy</a> uses it for now, planned <a
-                        href="https://github.com/python/black">black</a></li>
-            </ul>
-        </section>
-
-
-        <section>
-            <p>Improve the developer experience, not performance</p>
-            <img src="img/happy_programmer.jpeg"
-                 style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/">&copy;
-                Creative Commons CC0 License</a></p>
+          <h2>what it is not</h2>
+          <p style="color: red">essentially treated as comment during script evaluation</p>
+          <ul class="cross" style="display: block; margin: 20px auto; width: 90%">
+            <li class="fragment">no runtime type inference</li>
+            <li class="fragment">no performance improvement</li>
+          </ul>
         </section>
 
         <section>
-            <p>Improve the developer experience, <s>not performance</s></p>
-            <img src="img/happy_programmer.jpeg"
-                 style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/">&copy;
-                Creative Commons CC0 License</a></p>
+          <h2>what it is not</h2>
+          <p style="color: red">essentially treated as comment during script evaluation</p>
+          <ul class="cross" style="display: block; margin: 20px auto; width: 90%">
+            <li>no runtime type inference</li>
+            <li><s>no performance improvement</s></li>
+          </ul>
         </section>
-
-
         <section>
-            <p>Improve the developer experience, and performance</p>
-            <img src="img/happy_programmer.jpeg"
-                 style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/">&copy;
-                Creative Commons CC0 License</a></p>
-        </section>
-
-
-        <section>
-            <h1>what kind of?</h1>
-            <img style="margin-bottom: 0; border-bottom: 0;"
-                 src="./img/pinguin_jump.jpg"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://commons.wikimedia.org/wiki/File:Penguin_in_Antarctica_jumping_out_of_the_water.jpg">&copy;
-                Creative Commons CC0 1.0</a></p>
+          <h2><a href="https://github.com/mypyc/mypyc">mypyc</a> - speed up for free (mostly)</h2>
+          <ul>
+            <li class="fragment">compile a C extension type hinted code (not full syntax support yet)</li>
+            <li class="fragment">4 to 20 X performance improvement (due to avoid hashtable lookups)</li>
+            <li class="fragment">
+              projects using it: <a href="http://mypy-lang.org">mypy</a>,
+              <a href="https://github.com/python/black">black</a>
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h2>Gradual typing</h2>
-            <ul style="display: block; margin: 20px auto; width: 90%">
-                <li>no type hints specified ⇒ code dynamically typed</li>
-                <li class="fragment">but we can type hint
-                    <ul>
-                        <li>function parameters</li>
-                        <li>function return values</li>
-                        <li>variables</li>
-                    </ul>
-                </li>
-                <li class="fragment" style="color: darkred"><i><b>only</b></i> type
-                    hinted elements are type checked
-                </li>
-            </ul>
+          <p>Improve the developer experience, not performance</p>
+          <img src="img/happy_programmer.jpeg" style="margin-bottom: 0; border-bottom: 0" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/"
+              >&copy; Creative Commons CC0 License</a
+            >
+          </p>
         </section>
 
         <section>
-            <h2>gradual typing</h2>
-            <ul>
-                <li>running linter will report errors (if called code is type hinted):
-                </li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <p>Improve the developer experience, <s>not performance</s></p>
+          <img src="img/happy_programmer.jpeg" style="margin-bottom: 0; border-bottom: 0" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/"
+              >&copy; Creative Commons CC0 License</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <p>Improve the developer experience, and performance</p>
+          <img src="img/happy_programmer.jpeg" style="margin-bottom: 0; border-bottom: 0" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.pexels.com/photo/adult-chill-computer-connection-450271/"
+              >&copy; Creative Commons CC0 License</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h1>what kind of?</h1>
+          <img style="margin-bottom: 0; border-bottom: 0; width: 70%" src="./img/pinguin_jump.jpg" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://commons.wikimedia.org/wiki/File:Penguin_in_Antarctica_jumping_out_of_the_water.jpg"
+              >&copy; Creative Commons CC0 1.0</a
+            >
+          </p>
+        </section>
+
+        <section>
+          <h2>Gradual typing</h2>
+          <ul style="display: block; margin: 20px auto; width: 90%">
+            <li>no type hints specified ⇒ code dynamically typed</li>
+            <li class="fragment">
+              but we can type hint
+              <ul>
+                <li>function parameters</li>
+                <li>function return values</li>
+                <li>variables</li>
+              </ul>
+            </li>
+            <li class="fragment" style="color: darkred">
+              <i><b>only</b></i> type hinted elements are type checked
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>gradual typing</h2>
+          <ul>
+            <li>running linter will report errors (if called code is type hinted):</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                     # tests/test_magic_field.py
                     f = MagicField(name=1, MagicType.DEFAULT)
                     f.names()</code>
             </pre>
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 bernat@uvm ~/python-magic (master●)$ mypy --ignore-missing-imports tests/test_magic_field.py
                 tests/test_magic_field.py:21: error: Argument 1 to "MagicField" has incompatible type "int";
@@ -750,20 +867,19 @@
         </section>
 
         <section>
-            <h2>gradual typing</h2>
-            <ul>
-                <li>running linter will report errors (if called code is type hinted):
-                </li>
-            </ul>
+          <h2>gradual typing</h2>
+          <ul>
+            <li>running linter will report errors (if called code is type hinted):</li>
+          </ul>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                     # tests/test_magic_field.py
                     f = MagicField(name=1, MagicType.DEFAULT)
                     f.names()</code>
             </pre>
 
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 bernat@uvm ~/python-magic (master●)$ <mark>mypy</mark> --ignore-missing-imports <mark>tests/test_magic_field.py</mark>
                 tests/test_magic_field.py:21: error: Argument 1 to "MagicField" has incompatible type "int";
@@ -774,20 +890,19 @@
         </section>
 
         <section>
-            <h2>gradual typing</h2>
-            <ul>
-                <li>running linter will report errors (if called code is type hinted):
-                </li>
-            </ul>
+          <h2>gradual typing</h2>
+          <ul>
+            <li>running linter will report errors (if called code is type hinted):</li>
+          </ul>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                     # tests/test_magic_field.py
                     <mark>f = MagicField(1, MagicType.DEFAULT)</mark>
                     f.names()
                 </code>
             </pre>
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 bernat@uvm ~/python-magic (master●)$ mypy --ignore-missing-imports tests/test_magic_field.py
                 <mark>tests/test_magic_field.py:21: error: Argument 1 to "MagicField" has incompatible type "int";
@@ -798,20 +913,19 @@
         </section>
 
         <section>
-            <h2>gradual typing</h2>
-            <ul>
-                <li>running linter will report errors (if called code is type hinted):
-                </li>
-            </ul>
+          <h2>gradual typing</h2>
+          <ul>
+            <li>running linter will report errors (if called code is type hinted):</li>
+          </ul>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                     # tests/test_magic_field.py
                     f = MagicField(1, MagicType.DEFAULT)
                     <mark>f.names()</mark>
                 </code>
             </pre>
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 bernat@uvm ~/python-magic (master●)$ mypy --ignore-missing-imports tests/test_magic_field.py
                 tests/test_magic_field.py:21: error: Argument 1 to "MagicField" has incompatible type "int";
@@ -822,37 +936,33 @@
         </section>
 
         <section>
-            <h1>How to add it</h1>
-            <img src="./img/how.jpg" style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://pixabay.com/en/seal-beach-waves-water-surf-2243104/">&copy;
-                Creative Commons CC0 License</a></p>
+          <h1>How to add it</h1>
+          <img src="./img/how.jpg" style="margin-bottom: 0; border-bottom: 0; width: 70%" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://pixabay.com/en/seal-beach-waves-water-surf-2243104/"
+              >&copy; Creative Commons CC0 License</a
+            >
+          </p>
         </section>
 
-
         <section>
-            <h2>type annotations</h2>
-            <h3>syntax based on</h3>
-            <ul>
-                <li>mypy</li>
+          <h2>type annotations</h2>
+          <h3>syntax based on</h3>
+          <ul>
+            <li>mypy</li>
 
-                <li class="fragment"><a
-                        href="https://www.python.org/dev/peps/pep-3107/">PEP-3107 ~
-                    function
-                    annotations</a> - Python
-                    3.0
-                </li>
-                <li class="fragment"><a
-                        href="https://www.python.org/dev/peps/pep-0526/">PEP-526 ~
-                    variable
-                    annotations</a> - Python 3.6
-                </li>
-            </ul>
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-3107/">PEP-3107 ~ function annotations</a> - Python 3.0
+            </li>
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-0526/">PEP-526 ~ variable annotations</a> - Python 3.6
+            </li>
+          </ul>
         </section>
         <section>
-            <h2>type annotations</h2>
-            <h3>for example</h3>
-            <pre style="font-size: 0.75em">
+          <h2>type annotations</h2>
+          <h3>for example</h3>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name: str) -> str:
                         value : str = 'Hello'
@@ -861,9 +971,9 @@
                 </pre>
         </section>
         <section>
-            <h2>type annotations</h2>
-            <h3>function annotation</h3>
-            <pre style="font-size: 0.75em">
+          <h2>type annotations</h2>
+          <h3>function annotation</h3>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name<mark>: str</mark>) <mark>-> str</mark>:
                         value : str = 'Hello'
@@ -873,9 +983,9 @@
         </section>
 
         <section>
-            <h2>type annotations</h2>
-            <h3>variable annotation</h3>
-            <pre style="font-size: 0.75em">
+          <h2>type annotations</h2>
+          <h3>variable annotation</h3>
+          <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name: str) -> str:
                         value <mark>: str</mark> = 'Hello'
@@ -884,10 +994,9 @@
                 </pre>
         </section>
 
-
         <section>
-            <h2>type annotations</h2>
-            <pre style="font-size: 0.75em">
+          <h2>type annotations</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
             from typing import List
 
@@ -900,40 +1009,32 @@
                     </code>
             </pre>
 
-            <ul class="plus">
-                <li class="fragment">the canonical and <i>clean</i> way</li>
-                <li class="fragment">packaging solved</li>
-            </ul>
+          <ul class="plus">
+            <li class="fragment">the canonical and <i>clean</i> way</li>
+            <li class="fragment">packaging solved</li>
+          </ul>
 
-            <ul class="cross">
-                <li class="fragment">requires use of Python 3.6 (no Python 2, or
-                    <=3.4)
-                </li>
-                <li class="fragment">requires importing all type dependencies (runtime
-                    penalty?)
-                </li>
-                <li class="fragment"> the interpreter needs to evaluate type hints at
-                    syntax parsing - time consuming???
-                    <div class="fragment"><a
-                            href="https://www.python.org/dev/peps/pep-0563/">PEP-563 ~
-                        postponed
-                        evaluation of annotations</a> - Python 3.7
-                        <pre style="font-size: 0.75em">
+          <ul class="cross">
+            <li class="fragment">requires use of Python 3.6 (no Python 2, or <=3.4)</li>
+            <li class="fragment">requires importing all type dependencies (runtime penalty?)</li>
+            <li class="fragment">
+              the interpreter needs to evaluate type hints at syntax parsing - time consuming???
+              <div class="fragment">
+                <a href="https://www.python.org/dev/peps/pep-0563/">PEP-563 ~ postponed evaluation of annotations</a> -
+                Python 3.7+
+                <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                         from __future__ import annotations
                 </code>
             </pre>
-
-
-                    </div>
-
-                </li>
-            </ul>
+              </div>
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h2>type comments</h2>
-            <pre style="font-size: 0.75em">
+          <h2>type comments</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
             from typing import List
 
@@ -947,27 +1048,25 @@
                      self.elements.append(element)
                     </code>
             </pre>
-            <ul class="plus">
-                <li class="fragment">works under any Python version</li>
-                <li class="fragment">type information is kept locally</li>
-                <li class="fragment">packaging solved</li>
-            </ul>
+          <ul class="plus">
+            <li class="fragment">works under any Python version</li>
+            <li class="fragment">type information is kept locally</li>
+            <li class="fragment">packaging solved</li>
+          </ul>
 
-            <ul class="cross">
-                <li class="fragment">kinda ugly, lot of noise beside logic</li>
-                <li class="fragment">unused imports</li>
-                <li class="fragment">sometime confuses linters, need to add noqa/pylint
-                </li>
-            </ul>
-
+          <ul class="cross">
+            <li class="fragment">kinda ugly, lot of noise beside logic</li>
+            <li class="fragment">unused imports</li>
+            <li class="fragment">sometime confuses linters, need to add noqa/pylint</li>
+          </ul>
         </section>
 
         <section>
-            <h2>type comments</h2>
-            <ul class="cross">
-                <li>kinda ugly, lot of noise beside logic (6 lines)</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>type comments</h2>
+          <ul class="cross">
+            <li>kinda ugly, lot of noise beside logic (6 lines)</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: none; height: 505px;" class="lang-python" data-noescape>
 
 @contextmanager
@@ -984,11 +1083,11 @@ def swap_in_state(state, config, overrides):
         </section>
 
         <section>
-            <h2>type comments</h2>
-            <ul class="cross">
-                <li>kinda ugly, lot of noise beside logic (10 lines)</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>type comments</h2>
+          <ul class="cross">
+            <li>kinda ugly, lot of noise beside logic (10 lines)</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: none; height: 505px;" class="lang-python" data-noescape>
 
 @contextmanager
@@ -1005,11 +1104,11 @@ def swap_in_state(state,  <mark># type: State</mark>
         </section>
 
         <section>
-            <h2>type comments</h2>
-            <ul class="cross">
-                <li>kinda ugly, lot of noise beside logic (12 lines) + unused imports</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>type comments</h2>
+          <ul class="cross">
+            <li>kinda ugly, lot of noise beside logic (12 lines) + unused imports</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: none; height: 505px;" class="lang-python" data-noescape><mark>from typing import Generator, Tuple, Optional</mark>
 <mark>from magic import RunSate, HasGetSetMutable</mark>
 
@@ -1027,13 +1126,14 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>type comments</h2>
-            <ul class="cross">
-                <li>sometimes conflicts with other linters</li>
-            </ul>
-            <pre style="font-size: 0.75em">
+          <h2>type comments</h2>
+          <ul class="cross">
+            <li>sometimes conflicts with other linters</li>
+          </ul>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: 600px;" class="lang-python" data-trim data-noescape>
-    from typing import Generator, Tuple, Optional, Dict, List
+    from typing import Dict, Generator, List, Optional, Tuple
+
     from magic import RunSate
 
     <mark>HasGetSetMutable = Union[Dict, List]  # pylint: disable=invalid-name</mark>
@@ -1053,9 +1153,9 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>type comments</h2>
+          <h2>type comments</h2>
 
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
     @contextmanager
     def swap_in_state(state, config, overrides):
@@ -1066,7 +1166,7 @@ def swap_in_state(state,  # type: State
                 </code>
             </pre>
 
-            <pre style="font-size: 0.6em" class="fragment">
+          <pre style="font-size: 0.6em" class="fragment">
                 <code style="max-height: 600px;" class="lang-python" data-trim data-noescape>
     <mark>from typing import Generator, Tuple, Optional, Dict, List</mark>
     <mark>from magic import RunSate</mark>
@@ -1090,8 +1190,8 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>interface/stub files</h2>
-            <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
+          <h2>interface/stub files</h2>
+          <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
                 <code class="lang-python" data-trim data-noescape>
                 class A(object):
                   def __init__() -> None:
@@ -1101,7 +1201,7 @@ def swap_in_state(state,  # type: State
                       self.elements.append(element)
                     </code>
             </pre>
-            <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
+          <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
                 <code class="lang-python" data-trim data-noescape>
                 # a.pyi alongside a.py
                 <mark>from typing import List
@@ -1112,19 +1212,18 @@ def swap_in_state(state,  # type: State
                   def add(element: int) -> None: ...</mark>
                     </code>
             </pre>
-            <ul class="plus" style="margin-top: 0">
-                <li class="fragment">works under any Python version</li>
-                <li class="fragment">no original source code change required</li>
-                <li class="fragment">can use latest Python features</li>
-                <li class="fragment">no conflicts with other linter tools</li>
-                <li class="fragment">well tested with <a
-                        href="https://github.com/python/typeshed">typeshed</a></li>
-            </ul>
+          <ul class="plus" style="margin-top: 0">
+            <li class="fragment">works under any Python version</li>
+            <li class="fragment">no original source code change required</li>
+            <li class="fragment">can use latest Python features</li>
+            <li class="fragment">no conflicts with other linter tools</li>
+            <li class="fragment">well tested with <a href="https://github.com/python/typeshed">typeshed</a></li>
+          </ul>
         </section>
 
         <section>
-            <h2>interface/stub files</h2>
-            <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
+          <h2>interface/stub files</h2>
+          <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
                 <code class="lang-python" data-trim data-noescape>
                 class A(object):
                   def __init__() -> None:
@@ -1134,37 +1233,39 @@ def swap_in_state(state,  # type: State
                       self.elements.append(element)
                     </code>
             </pre>
-            <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
+          <pre style="font-size: 0.6em; margin-top: 0; margin-bottom: 0">
                 <code class="lang-python" data-trim data-noescape>
                 # a.pyi alongside a.py - ellipse for body stub
-                <mark>from typing import List
+                <mark>from typing import List</mark>
 
                 class A(object):
-                  elements = ... # type: List[int]
+                  elements: List[int] = ...
                   def __init__() -> None: ...
                     </code>
             </pre>
-            <ul class="cross">
-                <li>duplicate code - maintenance burden</li>
-                <li class="fragment">extra content to package<br>
-                    <a href="https://www.python.org/dev/peps/pep-0563/">PEP-563 ~
-                        Distributing and Packaging Type
-                        Information</a> - Python 3.7
-                </li>
-                <li class="fragment"> troublesome to maintain - WIP <a href="https://github.com/python/mypy/pull/5139">python/mypy/pull/5139</a>
-                    <ul>
-                        <li class="fragment">once specified source is ignored</li>
-                        <li class="fragment">no checks for matching stub to implementation</li>
-                        <li class="fragment">cannot annotate local variables</li>
-                    </ul>
-                </li>
-            </ul>
+          <ul class="cross">
+            <li>duplicate code - maintenance burden</li>
+            <li class="fragment">
+              extra content to package<br />
+              <a href="https://www.python.org/dev/peps/pep-0563/"
+                >PEP-563 ~ Distributing and Packaging Type Information</a
+              >
+              - Python 3.7
+            </li>
+            <li class="fragment">
+              troublesome to maintain - <a href="http://github.com/ambv/retype">retype</a> can help with this
+              <ul>
+                <li class="fragment">once specified source is ignored</li>
+                <li class="fragment">no checks for matching stub to implementation</li>
+                <li class="fragment">cannot annotate local variables</li>
+              </ul>
+            </li>
+          </ul>
         </section>
 
-
         <section>
-            <h2>bonus: docstrings</h2>
-            <pre style="font-size: 0.75em">
+          <h2>bonus: docstrings</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 class A(object):
                     def __init__():
@@ -1179,105 +1280,114 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <ul class="plus">
-                <li>works under any Python version</li>
-                <li class="fragment">does not clash with other linters (unless its a doc linter)</li>
-            </ul>
+          <ul class="plus">
+            <li>works under any Python version</li>
+            <li class="fragment">does not clash with other linters (unless its a doc linter)</li>
+          </ul>
 
-            <ul class="cross">
-                <li class="fragment">no standard way to specify complex cases (union)</li>
-                <li class="fragment">tool dependent support</li>
-                <li class="fragment">requires changing the documentation</li>
-                <li class="fragment">does not play well with type hinted code</li>
-            </ul>
+          <ul class="cross">
+            <li class="fragment">no standard way to specify complex cases (union)</li>
+            <li class="fragment">tool dependent support</li>
+            <li class="fragment">requires changing the documentation</li>
+            <li class="fragment">does not play well with type hinted code</li>
+          </ul>
         </section>
 
         <section>
-            <h1>what to add?</h1>
-            <img src="./img/deep_dive.jpg" style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.flickr.com/photos/wwarby/36875463355">&copy;
-                Creative Commons License</a></p>
+          <h1>what to add?</h1>
+          <img src="./img/deep_dive.jpg" style="margin-bottom: 0; border-bottom: 0; width: 70%" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.flickr.com/photos/wwarby/36875463355">&copy; Creative Commons License</a>
+          </p>
         </section>
 
         <section>
-            <h2>nominal types</h2>
-            <ul>
-                <li>all built in Python types (e.g., <i>int, float, type, object,
-                    etc.)</i></li>
-                <li class="fragment">generic containers (a few examples only)
-                    <pre style="font-size: 0.75em">
+          <h2>nominal types</h2>
+          <ul>
+            <li>all built in Python types (e.g., <i>int, float, type, object, etc.)</i></li>
+            <li class="fragment">
+              generic containers (a few examples only)
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    t : Tuple[int, float] = 0, 1.2
                    d : Dict[str, int] = {"a": 1, "b": 2}
                    d : MutableMapping[str, int] = {"a": 1, "b": 2}
                    l : List[int] = [1, 2, 3]
-                   i : Iterable[Text] = [ u'1', u'2', u'3']
+                   i : Iterable[str] = [ u'1', u'2', u'3']
                     </code>
                     </pre>
-                </li>
-                <li class="fragment">alias types
-                    <pre style="font-size: 0.75em">
+            </li>
+            <li class="fragment">
+              alias types
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    Vector = List[float]
                     </code>
                     </pre>
-                </li>
+            </li>
 
-                <li class="fragment">distinct types
-                    <pre style="font-size: 0.75em">
+            <li class="fragment">
+              distinct types
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    UserId = NewType('UserId', int)
                    some_id = UserId(524313)
                     </code>
                     </pre>
-                </li>
-
-            </ul>
+            </li>
+          </ul>
         </section>
 
-
         <section>
-            <h2>nominal types</h2>
-            <ul>
-                <li>NamedTuple
-                    <pre style="font-size: 0.75em">
+          <h2>nominal types</h2>
+          <ul>
+            <li>
+              NamedTuple
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    class Employee(NamedTuple):
                         name: str
                         id: int
                     </code>
                     </pre>
-                </li>
+            </li>
 
-                <li class="fragment">composer
-                    <pre style="font-size: 0.75em">
+            <li class="fragment">
+              composer - one of
+              <pre style="font-size: 0.75em; width: 20em">
                     <code class="lang-python" data-trim data-noescape>
                    Union[None, int, str] # one of
+                    </code>
+                    </pre>
+            </li>
+
+            <li class="fragment">
+              composer - optional
+              <pre style="font-size: 0.75em; width: 20em">
+                    <code class="lang-python" data-trim data-noescape>
                    Optional[float] # Union[None, float]
                     </code>
                     </pre>
-                </li>
-
-            </ul>
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h2>nominal types</h2>
-            <ul style="width: 80%">
-
-                <li>callable - functions
-                    <pre style="font-size: 0.75em">
+          <h2>nominal types</h2>
+          <ul style="width: 80%">
+            <li>
+              callable - functions
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    # Callable[[Arg1Type, Arg2Type], ReturnType]
                    def feeder(get_next_item: Callable[[], str]) -> None:
                     </code>
                     </pre>
-                </li>
+            </li>
 
-
-                <li class="fragment">generics - TypeVar
-                    <pre style="font-size: 0.75em">
+            <li class="fragment">
+              generics - TypeVar
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    T = TypeVar('T')
                    class Magic(Generic[T]):
@@ -1288,26 +1398,23 @@ def swap_in_state(state,  # type: State
                         v.value = v.value * v.value
                     </code>
                     </pre>
-                </li>
+            </li>
 
-                <li class="fragment">Any - disable type check
-                    <pre style="font-size: 0.75em">
+            <li class="fragment">
+              Any - disable type check
+              <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                    def foo(item: Any) -> int:
                         item.bar()
-                    </code>
-                </li>
-
-            </ul>
-
-
+                    </code></pre>
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h3><a href="https://www.python.org/dev/peps/pep-0544/">PEP-544</a> -
-                protocols</h3>
-            <p>nominal (main) vs structural typing (support)</p>
-            <pre style="font-size: 0.75em">
+          <h3><a href="https://www.python.org/dev/peps/pep-0544/">PEP-544</a> - protocols</h3>
+          <p>nominal (main) vs structural typing (support)</p>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
 
                     KEY = TypeVar('KEY', contravariant=true)
@@ -1323,15 +1430,12 @@ def swap_in_state(state,  # type: State
 
                     </code>
             </pre>
-
         </section>
 
-
         <section>
-            <h3><a href="https://www.python.org/dev/peps/pep-0544/">PEP-544</a> -
-                protocols</h3>
-            <p>nominal (main) vs structural typing (support)</p>
-            <pre style="font-size: 0.75em">
+          <h3><a href="https://www.python.org/dev/peps/pep-0544/">PEP-544</a> - protocols</h3>
+          <p>nominal (main) vs structural typing (support)</p>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
 
                     KEY = TypeVar('KEY', contravariant=true)
@@ -1347,56 +1451,26 @@ def swap_in_state(state,  # type: State
 
                     </code>
             </pre>
-
         </section>
 
         <section>
-            <h1>Gotchas</h1>
-            <img src="./img/gotcha.jpg" style="margin-bottom: 0; border-bottom: 0;"/>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://www.flickr.com/photos/120374925@N06/30078484263">&copy;
-                Creative Commons CC 2.0 License</a></p>
+          <h1>Gotchas</h1>
+          <img src="./img/gotcha.jpg" style="margin-bottom: 0; border-bottom: 0; width: 70%" />
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://www.flickr.com/photos/120374925@N06/30078484263">&copy; Creative Commons CC 2.0 License</a>
+          </p>
         </section>
 
         <section>
-            <h2>Gotcha #1 - str Python 2/3 diff</h2>
-
-            <pre style="font-size: 0.75em">
-                <code class="lang-python" data-trim data-noescape>
-                class A(object):
-                    def __repr__(self):
-                        # type: () -> str
-                        return 'Rule({})'.format(self.full_name)
-                    </code>
-            </pre>
-            <pre class="fragment" style="font-size: 0.75em">
-                <code class="lang-python" data-trim data-noescape>
-                from __future__ import unicode_literals
-
-                class A(object):
-                    def __repr__(self):
-                        # type: () -> str
-                        res = 'Rule({})'.format(self.full_name)
-                        if sys.version_info > (3, 0):
-                            # noinspection PyTypeChecker
-                            return res
-                        # noinspection PyTypeChecker
-                        return res.encode('utf-8')
-                    </code>
-            </pre>
-        </section>
-
-
-        <section>
-            <h2>Gotcha #2 - multiple return type</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #1 - multiple return type</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def magic(i: Union[str, int]) -> Union[str, int]:
                     return i * 2
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.75em">
+          <pre class="fragment" style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def other_func() -> int:
                     result = magic(2)
@@ -1407,15 +1481,15 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>Gotcha #2 - multiple return type</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #1 - multiple return type</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def magic(i: Union[str, int]) -> <mark>Any</mark>:
                     return i * 2
                     </code>
             </pre>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def other_func() -> int:
                     result = magic(2)
@@ -1426,8 +1500,8 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>Gotcha #2 - multiple return type</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #1 - multiple return type</h2>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
                 from typing import overload
 
@@ -1444,7 +1518,7 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def other_func() -> int:
                     result = magic(2)
@@ -1455,8 +1529,8 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>Gotcha #2 - multiple return type</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #1 - multiple return type</h2>
+          <pre style="font-size: 0.75em">
                 <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
                 from typing import overload
 
@@ -1473,7 +1547,7 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 def other_func() -> int:
                     result = magic(2)
@@ -1484,8 +1558,8 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-            <h2>Gotcha #3 - type lookup</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #2 - type lookup</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 class A(object):
 
@@ -1495,18 +1569,19 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.75em">
+          <pre class="fragment" style="font-size: 0.75em">
                 <code class="lang-bash" data-trim data-noescape>
                 test.py:3: error: Invalid type "test.A.float"
                     </code>
             </pre>
-            <p class="fragment">look for type in the closest namespace - <a
-                    href="https://github.com/python/mypy/issues/3775">3775</a></p>
+          <p class="fragment">
+            look for type in the closest namespace - <a href="https://github.com/python/mypy/issues/3775">3775</a>
+          </p>
         </section>
 
         <section>
-            <h2>Gotcha #3 - type lookup</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #2 - type lookup</h2>
+          <pre style="font-size: 0.75em">
                 <code class="lang-python" data-trim data-noescape>
                 <mark>if typing.TYPE_CHECKING:</mark>
                     <mark>import builtins</mark>
@@ -1518,40 +1593,37 @@ def swap_in_state(state,  # type: State
                            return 1.0
                     </code>
             </pre>
-            <pre style="font-size: 0.75em">
+          <pre style="font-size: 0.75em">
                 <code class="lang-bash" data-trim data-noescape>
                 test.py:3: error: Invalid type "test.A.float"
                     </code>
             </pre>
-            <p>look for type in the closest namespace - <a
-                    href="https://github.com/python/mypy/issues/3775">3775</a>
-            </p>
+          <p>look for type in the closest namespace - <a href="https://github.com/python/mypy/issues/3775">3775</a></p>
         </section>
 
         <section>
-
-            <h2>Gotcha #4 - contravariant argument</h2>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #3 - contravariant argument</h2>
+          <pre style="font-size: 0.75em; height: 16em">
                 <code class="lang-python" data-trim data-noescape>
                 from abc import ABCMeta, abstractmethod
                 from typing import Union
 
                 class A(metaclass=ABCMeta):
                     @abstractmethod
-                    def func(self, key):  # type: (Union[int, str]) -> str
+                    def func(self, key: Union[int, str]) -> str:
                         raise NotImplementedError
 
                 class B(A):
-                    def func(self, key):  # type: (int) -> str
+                    def func(self, key: int) -> str:
                         return str(key)
 
                 class C(A):
-                    def func(self, key):  # type: (str) -> str
+                    def func(self, key: str) -> str:
                         return key
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.75em">
+          <pre class="fragment" style="font-size: 0.75em">
                 <code class="lang-bash" data-trim data-noescape>
                 test.py:12: error: Argument 1 of "func" incompatible with supertype "A"
                 test.py:17: error: Argument 1 of "func" incompatible with supertype "A"
@@ -1560,35 +1632,33 @@ def swap_in_state(state,  # type: State
         </section>
 
         <section>
-
-            <h2>Gotcha #4 - contravariant argument</h2>
-            <p>specialization can handle more</p>
-            <pre style="font-size: 0.75em">
+          <h2>Gotcha #3 - contravariant argument</h2>
+          <p>specialization can handle more</p>
+          <pre style="font-size: 0.75em; height: 16em">
                 <code class="lang-python" data-trim data-noescape>
                 from abc import ABCMeta, abstractmethod
                 from typing import Union
 
                 class A(metaclass=ABCMeta):
                     @abstractmethod
-                    def func(self, key):  # type: (Union[int, str]) -> str
+                    def func(self, key: Union[int, str]) -> str:
                         raise NotImplementedError
 
                 class B(A):
-                    def func(self, key):  # type: (Union[int, str, bool]) -> str
+                    def func(self, key: Union[int, str, bool]) -> str:
                         return str(key)
 
                 class C(A):
-                    def func(self, key):  # type: (Union[int, str, List]) -> str
+                    def func(self, key: Union[int, str, List]) -> str:
                         return key
                     </code>
             </pre>
         </section>
 
         <section>
+          <h2>Gotcha #4 - compatibility</h2>
 
-            <h2>Gotcha #5 - compatibility</h2>
-
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 class A:
                     @classmethod
@@ -1602,7 +1672,7 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 from typing import List, Type
 
@@ -1611,26 +1681,24 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                         print( [e.magic(1) for e in elements])
                     TypeError: magic() missing 1 required positional argument: 'b'
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                     test.py:9: error: Signature of "magic" incompatible with supertype "A"
                     </code>
             </pre>
-
         </section>
 
         <section>
+          <h2>Gotcha #4 - compatibility</h2>
 
-            <h2>Gotcha #5 - compatibility</h2>
-
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 class A:
                     @classmethod
@@ -1644,7 +1712,7 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 from typing import List, Type
 
@@ -1652,14 +1720,12 @@ def swap_in_state(state,  # type: State
                 print( [e.magic(1) for e in elements])
                     </code>
             </pre>
-
         </section>
 
         <section>
+          <h2>Gotcha #4 - compatibility</h2>
 
-            <h2>Gotcha #5 - compatibility</h2>
-
-            <pre style="font-size: 0.6em">
+          <pre style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 class A:
                     def __init__(self, a: int) -> None:
@@ -1671,7 +1737,7 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                 from typing import List, Type
 
@@ -1680,34 +1746,33 @@ def swap_in_state(state,  # type: State
                     </code>
             </pre>
 
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                         print( [e(1) for e in elements])
                     TypeError: __init__() missing 1 required positional argument: 'b'
                     </code>
             </pre>
-            <pre class="fragment" style="font-size: 0.6em">
+          <pre class="fragment" style="font-size: 0.6em">
                 <code class="lang-python" data-trim data-noescape>
                     </code>
             </pre>
 
-            <ul class="fragment">
-                <li><i>too common to prohibit incompatible __init__ and __new__</i></li>
-            </ul>
-
+          <ul class="fragment">
+            <li><i>too common to prohibit incompatible __init__ and __new__</i></li>
+          </ul>
         </section>
         <section>
-            <img src="./img/david.png"/>
+          <img src="./img/david.png" />
         </section>
 
-
         <section>
-            <h2>when you hit the wall</h2>
-            <ul style="width: 90%">
-                <li>take out the bigger hammer</li>
-                <li class="fragment">use <i>reveal_type</i> to see inferred type</li>
-                <li class="fragment"> use <i>cast</i> to force a given type:
-                    <pre style="font-size: 0.7em">
+          <h2>when you hit the wall</h2>
+          <ul style="width: 90%">
+            <li>take out the bigger hammer</li>
+            <li class="fragment">use <i>reveal_type</i> to see inferred type</li>
+            <li class="fragment">
+              use <i>cast</i> to force a given type:
+              <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 from typing import List, cast
 
@@ -1718,37 +1783,313 @@ def swap_in_state(state,  # type: State
                 c = cast(List[str], a) # type: List[str] # passes fine (no runtime check)
                 reveal_type(c)         # -> error: Revealed type is 'builtins.list[builtins.str]'</code>
             </pre>
-                </li>
-                <li class="fragment">use the <i># type: ignore</i> comment to ignore an
-                    error:
-                    <pre style="font-size: 0.7em">
+            </li>
+            <li class="fragment">
+              use the <i># type: ignore</i> comment to ignore an error:
+              <pre style="font-size: 0.7em">
                 <code class="lang-python" data-trim data-noescape>
                 x = confusing_function() # type: ignore # see mypy/issues/1167
                     </code>
             </pre>
-                </li>
-            </ul>
-
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h1>Merge docstring and typing?</h1>
+          <h1>The ever evolving snake</h1>
         </section>
 
         <section>
-            <h2>how to document types?</h2>
-            <ul style="width: 80%">
-                <li class="fragment"><a
-                        href="https://www.python.org/dev/peps/pep-0257/">PEP-257</a>
-                    defines how-to
-                    document Python code
-                </li>
-                <li class="fragment">also supports adding type information for:
-                    <ul>
-                        <li>variable</li>
-                        <li>parameter</li>
-                    </ul>
-                    <pre style="font-size: 0.75em" class="fragment">
+          <h3><a href="https://www.python.org/dev/peps/pep-0586/">PEP-586 Literal types</a></h3>
+          <div class="fragment">
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+@overload
+def open(fn: str, mode: Literal['r', 'w']) -> IO[str]: pass
+@overload
+def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
+def open(fn: str, mode: str):
+    ...
+
+with open("/etc/passwd", "r") as ft:
+    lines: str = ft.read()
+
+with open("/bin/sh", "rb") as fb:
+    data: bytes = fb.read()
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0586/">PEP-586 Literal types</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+@overload
+def open(fn: str, mode: Literal['r', 'w']) -> IO[str]: pass
+@overload
+def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
+def open(fn: str, mode: str):
+    ...
+
+with <mark>open</mark>("/etc/passwd", <mark>"r"</mark>) as ft:
+    lines: <mark>str</mark> = ft.read()
+
+with open("/bin/sh", "rb") as fb:
+    data: bytes = fb.read()
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0586/">PEP-586 Literal types</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+@overload
+def open(fn: str, mode: Literal['r', 'w']) -> IO[str]: pass
+@overload
+def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
+def open(fn: str, mode: str):
+    ...
+
+with open("/etc/passwd", "r") as ft:
+    lines: str = ft.read()
+
+with <mark>open</mark>("/bin/sh", <mark>"rb"</mark>) as fb:
+    data: <mark>bytes</mark> = fb.read()
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0589/">PEP-589 Typed dictionaries</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+from typing import TypedDict
+
+class Movie(TypedDict, total=True):
+    name: str
+    year: int
+
+movie: Movie = {
+    'name': 'Blade Runner',
+    'year': 1982,
+}
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0589/">PEP-589 Typed dictionaries</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+from typing import TypedDict
+
+class Movie(TypedDict, total=True):
+    <mark>name: str</mark>
+    year: int
+
+movie: Movie = {
+    <mark>'name': 'Blade Runner'</mark>,
+    'year': 1982,
+}
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0589/">PEP-589 Typed dictionaries</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+from typing import TypedDict
+
+class Movie(TypedDict, total=True):
+    name: str
+    <mark>year: int</mark>
+
+movie: Movie = {
+    'name': 'Blade Runner',
+    <mark>'year': 1982</mark>,
+}
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0591/">PEP-591 Final qualifier</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+
+RATE: Final[int] = 3000
+RATE = 2500  # ERROR -- cannot set Final variable
+
+# Final class variable
+class User:
+    DEFAULT_ID: Final[int] = 0
+class BusinessUser(User):
+    DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0591/">PEP-591 Final qualifier</a></h3>
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+
+<mark>RATE: Final[int] = 3000</mark>
+RATE = 2500  # ERROR -- cannot set Final variable
+
+# Final class variable
+class User:
+    <mark>DEFAULT_ID: Final[int] = 0</mark>
+class BusinessUser(User):
+    DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3><a href="https://www.python.org/dev/peps/pep-0591/">PEP-591 Final qualifier</a></h3>
+
+            <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
+
+RATE: Final[int] = 3000
+<mark>RATE = 2500  # ERROR -- cannot set Final variable</mark>
+
+# Final class variable
+class User:
+    DEFAULT_ID: Final[int] = 0
+class BusinessUser(User):
+    <mark>DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable</mark>
+                </code>
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0585/">PEP-585 less camel case and imports</a></h3>
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python 3.5 or later
+from typing import List, Dict
+
+a: List[int] = [1, 2]
+b : Dict[int, str] = {}</code>
+            </pre>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0585/">PEP-585 less camel case and imports</a></h3>
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python 3.9 or later
+
+
+a: list[int] = [1, 2]
+b : dict[int, str] = {}</code>
+            </pre>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0585/">PEP-585 less camel case and imports</a></h3>
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python 3.7 or later
+from __future__ import annotations
+
+a: list[int] = [1, 2]
+b : dict[int, str] = {}</code>
+            </pre>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0604/">PEP-604 shorter syntax for Union</a></h3>
+
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python3.5 or later
+from typing import Optional, Union
+
+a : Union[str, int] = "1"
+b : Optional[int] = 2</code>
+            </pre>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0604/">PEP-604 shorter syntax for Union</a></h3>
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python3.10 or later
+
+
+a : str | int = "1"
+b : int | None = 2</code>
+            </pre>
+        </section>
+
+        <section>
+          <h3><a href="https://www.python.org/dev/peps/pep-0604/">PEP-604 shorter syntax for Union</a></h3>
+          <pre style="font-size: 0.75em">
+                <code style="max-height: 500px;" class="lang-python" data-noescape># python3.7 or later
+from __future__ import annotations
+
+a : str | int = "1"
+b : int | None = 2</code>
+            </pre>
+        </section>
+
+        <section>
+          <h2>what's next for typing</h2>
+          <ul>
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-0612/">PEP-612 Parameter Specification Variables</a> - type
+              hint decorators
+            </li>
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-0613/">PEP-613 Explicit Type Aliases</a> - explicitly declare
+              an assignment as a type alias
+            </li>
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-0647/">PEP-647 user-defined type guards</a> - explicit type
+              narrowing
+            </li>
+            <li class="fragment">
+              numpy/pandas support (exact sized arrays,
+              <a href="https://www.python.org/dev/peps/pep-0646/">PEP-646 variadic type variables</a>)
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Merge docstring and typing?</h1>
+        </section>
+
+        <section>
+          <h2>how to document types?</h2>
+          <ul style="width: 80%">
+            <li class="fragment">
+              <a href="https://www.python.org/dev/peps/pep-0257/">PEP-257</a>
+              defines how-to document Python code
+            </li>
+            <li class="fragment">
+              also supports adding type information for:
+              <ul>
+                <li>variable</li>
+                <li>parameter</li>
+              </ul>
+              <pre style="font-size: 0.75em" class="fragment">
                 <code class="lang-python" data-trim data-noescape>
                 class A(object):
                     def __init__():
@@ -1762,360 +2103,119 @@ def swap_in_state(state,  # type: State
                        self.elements.append(element)
                     </code>
             </pre>
-                </li>
-            </ul>
+            </li>
+          </ul>
         </section>
 
         <section>
-            <h2><a href="https://github.com/gaborbernat/sphinx-autodoc-typehints">sphinx-autodoc-typehints</a>
-            </h2>
-            <ul>
-                <li>avoid type duplication between docstring and type hinting</li>
-                <li>during document generation get type hinted types and insert it into
-                    the docstring
-                </li>
-            </ul>
+          <h2><a href="https://pypi.org/project/sphinx-autodoc-typehints">sphinx-autodoc-typehints</a></h2>
+          <ul>
+            <li>avoid type duplication between docstring and type hinting</li>
+            <li>during document generation get type hinted types and insert it into the docstring</li>
+          </ul>
         </section>
 
         <section>
-            <h2>how to use it</h2>
-            <ul>
-                <li>install the library
-                    <pre style="font-size: 0.75em">
+          <h2>how to use it</h2>
+          <ul>
+            <li>
+              install the library
+              <pre style="font-size: 0.75em; width: 23em">
                 <code class="lang-bash" data-trim data-noescape>
-                    pip install sphinx-autodoc-types>=2.1.1
+                    pip install sphinx-autodoc-types>=1.11.1
                     </code>
             </pre>
-                </li>
+            </li>
 
-                <li>enable it inside the <i>conf.py</i>
-                    <pre style="font-size: 0.75em">
+            <li>
+              enable it inside the <i>conf.py</i>
+              <pre style="font-size: 0.75em; width: 23em">
                 <code class="lang-python" data-trim data-noescape>
                     # conf.py
                     extensions = ['sphinx_autodoc_typehints']
                     </code>
             </pre>
-                </li>
-                <li>generate the documentation as usual</li>
-            </ul>
+            </li>
+            <li>generate the documentation as usual</li>
+          </ul>
         </section>
 
         <section>
-            <section>
-                <h5>outcome - <a href="https://github.com/RookieGameDevs/revived">RookieGameDevs/revived</a>
-                </h5>
-                <img style="width: auto; height: 500px;" data-src="img/sphinx_doc_src.PNG">
-            </section>
+          <section>
+            <h5>outcome - <a href="https://github.com/RookieGameDevs/revived">RookieGameDevs/revived</a></h5>
+            <img style="width: auto; height: 500px" data-src="img/sphinx_doc_src.PNG" />
+          </section>
         </section>
 
         <section>
-            <section>
-                <h5>outcome - <a href="https://github.com/RookieGameDevs/revived">RookieGameDevs/revived</a>
-                </h5>
-                <img style="width: auto; height: 500px;" data-src="img/sphinx_doc.PNG">
-            </section>
+          <section>
+            <h5>outcome - <a href="https://github.com/RookieGameDevs/revived">RookieGameDevs/revived</a></h5>
+            <img style="width: auto; height: 500px" data-src="img/sphinx_doc.PNG" />
+          </section>
         </section>
 
         <section>
-            <h2>what's next for typing</h2>
-            <div class="fragment">
-                <h3><a href="https://www.python.org/dev/peps/pep-0586/">Literal types - PEP-586</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-@overload
-def open(fn: str, mode: Literal['r', 'w']) -> IO[Text]: pass
-@overload
-def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
-def open(fn: str, mode: str):
-    ...
-
-with open("/etc/passwd", "r") as ft:
-    lines = ft.readlines()  # List[Text]
-
-with open("/bin/sh", "rb") as fb:
-    data = fb.read(512) # bytes
-                </code>
-            </pre>
-            </div>
+          <h1>conclusion</h1>
+        </section>
+        <section>
+          <h2>when to use it?</h2>
+          <ul>
+            <li>think of them as unit tests ensuring type correctness</li>
+            <li class="fragment">so use them whenever you would write unit tests</li>
+            <li class="fragment">
+              but remember they can do much more
+              <ul>
+                <li>checked docstring typing</li>
+                <li>runtime type validation</li>
+                <li>etc.</li>
+              </ul>
+            </li>
+            <li class="fragment">but prepare for some discomfort and challenge sometimes</li>
+          </ul>
         </section>
 
         <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0586/">Literal types - PEP-586</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-@overload
-def open(fn: str, mode: Literal['r', 'w']) -> IO[Text]: pass
-@overload
-def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
-def open(fn: str, mode: str):
-    ...
-
-with <mark>open</mark>("/etc/passwd", <mark>"r"</mark>) as ft:
-    lines = ft.readlines()  # <mark>List[Text]</mark>
-
-with open("/bin/sh", "rb") as fb:
-    data = fb.read(512) # bytes
-                </code>
-            </pre>
-            </div>
+          <h1>thank you</h1>
+          <img data-src="img/thats_all_folks.jpg" style="margin-bottom: 0; border-bottom: 0; width: 70%" />
+          <p>
+            <a href="https://www.bernat.tech/the-state-of-type-hints-in-python/"
+              >https://www.bernat.tech/the-state-of-type-hints-in-python/</a
+            >
+          </p>
+          <p style="font-size: 12px; margin: 0 0">
+            <a href="https://commonhttps.wikimedia.org/wiki/File:Common_Seal_Phoca_vitulina.jpg"
+              >&copy; Creative Commons Attribution-Share Alike 2.5 Generic</a
+            >
+          </p>
         </section>
 
         <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0586/">Literal types - PEP-586</a></h3>
+          <h1>we're hiring</h1>
+          <h3><a href="https://bloomberg.com/engineering">https://bloomberg.com/engineering</a></h3>
 
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-@overload
-def open(fn: str, mode: Literal['r', 'w']) -> IO[Text]: pass
-@overload
-def open(fn: str, mode: Literal['rb', 'wb']) -> IO[bytes]: pass
-def open(fn: str, mode: str):
-    ...
-
-with open("/etc/passwd", "r") as ft:
-    lines = ft.readlines()  # List[Text]
-
-with <mark>open</mark>("/bin/sh", <mark>"rb"</mark>) as fb:
-    data = fb.read(512) # <mark>bytes</mark>
-                </code>
-            </pre>
-            </div>
+          <p>
+            see <a href="https://TechAtBloomberg.com">TechAtBloomberg.com</a> /
+            <a href="https://twitter.com/techatbloomberg">@TechAtBloomberg</a>
+          </p>
         </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0589/">Typed dictionaries - PEP-589</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-class Movie(TypedDict):
-    name: str
-    year: int
-
-movie: Movie = {'name': 'Blade Runner', 'year': 1982}
-                </code>
-            </pre>
-            </div>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0591/">Final qualifier - PEP-591</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-
-RATE: Final = 3000
-RATE = 2500  # ERROR -- cannot set Final variable
-
-# Final class variable
-class User:
-    DEFAULT_ID: Final = 0
-class BusinessUser(User):
-    DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable
-                </code>
-            </pre>
-            </div>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0591/">Final qualifier - PEP-591</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-
-<mark>RATE: Final = 3000</mark>
-RATE = 2500  # ERROR -- cannot set Final variable
-
-# Final class variable
-class User:
-    <mark>DEFAULT_ID: Final = 0</mark>
-class BusinessUser(User):
-    DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable
-                </code>
-            </pre>
-            </div>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <div>
-                <h3><a href="https://www.python.org/dev/peps/pep-0591/">Final qualifier - PEP-591</a></h3>
-
-                <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-trim data-noescape>
-
-RATE: Final = 3000
-<mark>RATE = 2500  # ERROR -- cannot set Final variable</mark>
-
-# Final class variable
-class User:
-    DEFAULT_ID: Final = 0
-class BusinessUser(User):
-    <mark>DEFAULT_ID = 1  # ERROR -- cannot set inherited Final class variable</mark>
-                </code>
-            </pre>
-            </div>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>merge stubs and sources during check</h3>
-            <ul>
-                <li> troublesome to maintain stubs - WIP <a href="https://github.com/python/mypy/pull/5139">python/mypy/pull/5139</a>
-                    <ul>
-                        <li>once specified source is ignored</li>
-                        <li>no checks for matching stub to implementation</li>
-                        <li>cannot annotate local variables</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>numeric types</h3>
-            <ul>
-                <li>numpy/pandas support
-                    <ul>
-                        <li>exact sized arrays</li>
-                        <li>variadic type variables</li>
-                        <li>key types</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>less camel case and imports</h3>
-            <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-noescape>from typing import List
-
-a: List[int] = [1, 2]
-b : Dict[int, str] = {}</code>
-            </pre>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>less camel case and imports</h3>
-            <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-noescape>
-
-a: list[int] = [1, 2]
-b : dict[int, str] = {}</code>
-            </pre>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>shorter syntax</h3>
-            <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-noescape>a : Union[str, int]
-b : Optional[int] = {}</code>
-            </pre>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>shorter syntax</h3>
-            <pre style="font-size: 0.75em">
-                <code style="max-height: 500px;" class="lang-python" data-noescape>a : str | int
-b : ?int = {}</code>
-            </pre>
-        </section>
-
-        <section>
-            <h2>what's next for typing</h2>
-            <h3>define unified core error codes</h3>
-            <ul>
-                <li> now that we have 4+ type checkers</a>
-                    <ul>
-                        <li>have common error codes</li>
-                        <li>disabling errors should be cross tool compatible</li>
-                        <li>common error FAQ base</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-
-
-        <section>
-            <h1>conclusion</h1>
-        </section>
-        <section>
-            <h2>when to use it?</h2>
-            <ul>
-                <li>think of them as unit tests ensuring type correctness</li>
-                <li class="fragment">so use them whenever you would write unit tests</li>
-                <li class="fragment">but remember they can do much more
-                    <ul>
-                        <li>checked docstring typing</li>
-                        <li>runtime type validation</li>
-                        <li>etc.</li>
-                    </ul>
-                </li>
-                <li class="fragment">but prepare for some discomfort and challenge sometimes</li>
-            </ul>
-        </section>
-
-
-        <section>
-            <h1>thank you</h1>
-            <img data-src="img/thats_all_folks.jpg"
-                 style="margin-bottom: 0; border-bottom: 0;"/>
-            <p><a href="https://www.bernat.tech/the-state-of-type-hints-in-python/">https://www.bernat.tech/the-state-of-type-hints-in-python/</a>
-            </p>
-            <p style="font-size: 12px; margin: 0 0;"><a
-                    href="https://commonhttps.wikimedia.org/wiki/File:Common_Seal_Phoca_vitulina.jpg">&copy;
-                Creative Commons Attribution-Share Alike 2.5 Generic</a></p>
-        </section>
-
-        <section>
-            <h1>we're hiring</h1>
-            <h3><a href="https://bloomberg.com/engineering">https://bloomberg.com/engineering</a>
-            </h3>
-
-            <p>see <a href="https://TechAtBloomberg.com">TechAtBloomberg.com</a> / <a
-                    href="https://twitter.com/techatbloomberg">@TechAtBloomberg</a></p>
-        </section>
-
+      </div>
     </div>
-</div>
 
-    <div style="position: absolute; bottom: 2px; right: 2px; width: 8em;">
+    <div style="position: absolute; bottom: 2px; right: 2px; width: 10em">
       <p
         style="
           color: #767676;
           font-family: Helvetica, sans-serif;
           font-weight: bold;
-          font-size: 1.4em;
+          font-size: 1.75em;
           margin: 0 2px 2px 0;
           text-align: center;
         "
       >
         Bloomberg
       </p>
-      <p
-        style="
-          text-align: center;
-          font-weight: bold;
-          font-size: 0.1em;
-          margin: 0 auto;
-        "
-      >
-        &copy; 2020 Bloomberg Finance L.P. <br />All rights reserved.
+      <p style="text-align: center; font-weight: bold; font-size: 0.7em; margin: 0 auto">
+        &copy; 2021 Bloomberg Finance L.P. <br />All rights reserved.
       </p>
     </div>
 
