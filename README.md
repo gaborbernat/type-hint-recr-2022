@@ -1,14 +1,8 @@
-# Type hinting (and mypy)
+# Type hints - Inside the snake pit
 
-[Talk for PyCon US 2019](https://www.youtube.com/watch?v=hTrjTAPnA_k/).
+Type hints in Python were initially introduced in 2015. Since, then the type annotation system has gone through multiple
+improvement cycles, and can be now considered a mature and stable part of the language.
 
-## Abstract
-
-Type hinting for Python (as a linter tool) came out in September 2015 as part of Python 3.5 (and was championed by Guido
-himself). Since then, variable annotations (plus, more recently, protocols) improved its capabilities even further. Over
-the last two years, tools, such as mypy, could build on top of it. Slowly, these annotations have emerged from a proof
-of concept state (e.g., mypy API planning) to becoming a stable feature.
-
-In this presentation, I'll tell my story of using type hints for both adding type hinting and checking type correctness
-for a library supporting both Python 2 and 3 and reusing this information to insert type data into the generated Sphinx
-documentation automatically.
+Join Bloomberg Engineering to learn about type hinting and how tools such as mypy leverage it. We will discuss the when,
+what, how and why to add type annotations to your code; and present some challenges you might run into while doing so.
+Finally, we'll show how to automatically inject this information into your documentation.

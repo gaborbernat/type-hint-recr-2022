@@ -41,7 +41,7 @@
           <h5>inside the snake pit</h5>
           <p>
             <small
-              >by <a href="https://github.com/gaborbernat">Bernat Gabor</a> /
+              >by <a href="https://bernat.tech">Bernat Gabor</a> /
               <a src="https://twitter.com/gjbernat">@gjbernat</a> /
               <a href="https://github.com/bloomberg">Bloomberg</a>
             </small>
@@ -318,7 +318,7 @@
               <li>added to Python standard library with version 3.5 (improved ever since)</li>
               <pre style="height: 70px; font-size: 1em">
                     <code class="lang-python" data-trim data-noescape>
-                    from typing import Any
+                    from typing import TypedDict
                     </code>
                 </pre>
             </div>
@@ -500,52 +500,153 @@
         </style>
 
         <section>
-          <h2>data validation - pydantic</h2>
+          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
           <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
             <li>a cleaner syntax to specify type requirements</li>
             <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    from datetime import datetime
-                    from typing import List
+              from datetime import datetime
+              from typing import List
 
-                    from pydantic import BaseModel, ValidationError
+              from pydantic import BaseModel, ValidationError
 
-                    class User(BaseModel):
-                        id: int
-                        name = 'John Doe'
-                        signup_ts: datetime = None
-                        friends: List[int] = []
+              class User(BaseModel):
+                  id: int
+                  name = "John Doe"
+                  signup_ts: datetime = None
+                  friends: List[int] = []
 
-                    external_data = {'id': '123', 'signup_ts': 'broken',
-                                     'friends': [1, 2, 'not a number']}
-                    try:
-                        user = User(**external_data)
-                    except ValidationError as e:
-                        print(e.json())
 
+              external_data = {
+                  "id": "123",
+                  "signup_ts": "broken",
+                  "friends": [1, 2, "not a number"],
+              }
+              try:
+                  user = User(**external_data)
+              except ValidationError as e:
+                  print(e.json())
+                    </code>
+                </pre>
+          </ul>
+        </section>
+
+         <section>
+          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
+                    <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
+              from datetime import datetime
+              from typing import List
+
+              from pydantic import BaseModel, ValidationError
+
+              class User(BaseModel):
+                  <mark>id: int</mark>
+                  name = "John Doe"
+                  signup_ts: datetime = None
+                  friends: List[int] = []
+
+
+              external_data = {
+                  <mark>"id": "123"</mark>,
+                  "signup_ts": "broken",
+                  "friends": [1, 2, "not a number"],
+              }
+              try:
+                  user = User(**external_data)
+              except <mark>ValidationError</mark> as e:
+                  print(e.json())
+                    </code>
+                </pre>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
+                    <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
+              from datetime import datetime
+              from typing import List
+
+              from pydantic import BaseModel, ValidationError
+
+              class User(BaseModel):
+                  id: int
+                  name = "John Doe"
+                  <mark>signup_ts: datetime = None</mark>
+                  friends: List[int] = []
+
+
+              external_data = {
+                  "id": "123",
+                  <mark>"signup_ts": "broken",</mark>
+                  "friends": [1, 2, "not a number"],
+              }
+              try:
+                  user = User(**external_data)
+              except <mark>ValidationError</mark> as e:
+                  print(e.json())
                     </code>
                 </pre>
           </ul>
         </section>
 
         <section>
-          <h2>detect vulnerable code - security</h2>
-          <p>Facebook - pyre</p>
-          <pre style="font-size: 0.75em">
+          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
+          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
+            <li>a cleaner syntax to specify type requirements</li>
+            <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    def magic_call(unsafe: UserProvidedStr, safe: str):
-                        subprocess.check_call([unsafe])
-                        subprocess.check_call([safe])
+              from datetime import datetime
+              from typing import List
+
+              from pydantic import BaseModel, ValidationError
+
+              class User(BaseModel):
+                  id: int
+                  name = "John Doe"
+                  signup_ts: datetime = None
+                  <mark>friends: List[int] = []</mark>
+
+
+              external_data = {
+                  "id": "123",
+                  "signup_ts": "broken",
+                  <mark>"friends": [1, 2, "not a number"]</mark>,
+              }
+              try:
+                  user = User(**external_data)
+              except <mark>ValidationError</mark> as e:
+                  print(e.json())
                     </code>
                 </pre>
+          </ul>
         </section>
+
 
         <section>
           <h2>detect vulnerable code - security</h2>
           <p>Facebook - pyre</p>
           <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    def magic_call(<mark>unsafe</mark>: UserProvidedStr, safe: str):
+                    def magic_call(unsafe: UserProvidedStr, safe: str) -> None:
+                        subprocess.check_call([unsafe])
+                        subprocess.check_call([safe])
+                    </code>
+                </pre>
+        </section>
+
+            <section>
+          <h2>detect vulnerable code - security</h2>
+          <p>Facebook - pyre</p>
+          <pre style="font-size: 0.75em">
+                    <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
+                    def magic_call(<mark>unsafe</mark>: UserProvidedStr, safe: str) -> None:
                         <mark>subprocess.check_call([unsafe])</mark> # error out
                         subprocess.check_call([safe])
                     </code>
@@ -557,70 +658,13 @@
           <p>Facebook - pyre</p>
           <pre style="font-size: 0.75em">
                     <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    def magic_call(unsafe: UserProvidedStr, <mark>safe: str</mark>):
+                    def magic_call(unsafe: UserProvidedStr, <mark>safe: str</mark>) -> None:
                         subprocess.check_call([unsafe])
                         <mark>subprocess.check_call([safe])</mark> # allow
                     </code>
                 </pre>
         </section>
 
-        <section>
-          <h2>data validation - <a href="https://github.com/samuelcolvin/pydantic">pydantic</a></h2>
-          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-            <li>a cleaner syntax to specify type requirements</li>
-            <pre style="font-size: 0.75em">
-                    <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    from datetime import datetime
-                    from typing import List
-
-                    from pydantic import BaseModel, ValidationError
-
-                    class User(BaseModel):
-                        id: int
-                        name = 'John Doe'
-                        <mark>signup_ts: datetime</mark> = None
-                        friends: List[int] = []
-
-                    external_data = {'id': '123', <mark>'signup_ts': 'broken'</mark>,
-                                     'friends': [1, 2, 'not a number']}
-                    try:
-                        user = User(**external_data)
-                    except <mark>ValidationError</mark> as e:
-                        print(e.json())
-
-                    </code>
-                </pre>
-          </ul>
-        </section>
-
-        <section>
-          <h2>data validation - pydantic</h2>
-          <ul class="plus" style="display: block; margin: 20px auto; width: 90%">
-            <li>a cleaner syntax to specify type requirements</li>
-            <pre style="font-size: 0.75em">
-                    <code class="lang-python" style="max-height: 500px;" data-trim data-noescape>
-                    from datetime import datetime
-                    from typing import List
-
-                    from pydantic import BaseModel, ValidationError
-
-                    class User(BaseModel):
-                        id: int
-                        name = 'John Doe'
-                        signup_ts: datetime = None
-                        <mark>friends: List[int]</mark> = []
-
-                    external_data = {'id': '123', 'signup_ts': 'broken',
-                                     'friends': [1, 2, <mark>'not a number'</mark>]}
-                    try:
-                        user = User(**external_data)
-                    except <mark>ValidationError</mark> as e:
-                        print(e.json())
-
-                    </code>
-                </pre>
-          </ul>
-        </section>
 
         <section>
           <h2>what it is not</h2>
@@ -829,7 +873,7 @@
           <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name: str) -> str:
-                        value : str = 'Hello'
+                        value : str = "Hello"
                         return value + name
                     </code>
                 </pre>
@@ -840,7 +884,7 @@
           <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name<mark>: str</mark>) <mark>-> str</mark>:
-                        value : str = 'Hello'
+                        value : str = "Hello"
                         return value + name
                     </code>
                 </pre>
@@ -852,7 +896,7 @@
           <pre style="font-size: 0.75em">
                     <code class="lang-python" data-trim data-noescape>
                     def greeting(name: str) -> str:
-                        value <mark>: str</mark> = 'Hello'
+                        value <mark>: str</mark> = "Hello"
                         return value + name
                     </code>
                 </pre>
